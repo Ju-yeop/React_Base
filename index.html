@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        function Minutetohours(){
+            const [item, setitem] = React.useState(0)
+            const [judge, setjudge] = React.useState(false);
+            const onChange = (event) => {
+                setitem(() => event.target.value);
+            }
+            const inverted = () => {
+                setjudge((judge) => !judge);
+                reset()
+            }
+            const reset = () => {
+                setitem((item) => 0);
+            }
+            return (
+                <div>
+                    <h3>Minute to Hours</h3>
+                    <div>
+                        <label forhtml="m_input">Minute</label>
+                        <input
+                            id="m_input"
+                            value={judge ? item * 60 : item}
+                            placeholder="Minute"
+                            type="number"
+                            onChange={onChange}
+                            disabled={judge}
+                            />
+                    </div>
+                    <div>
+                        <label forhtml="h_input">Hour</label>
+                        <input
+                            id="h_input"
+                            value={judge ? item : Math.round(item/60)}
+                            placeholder="Minute"
+                            type="number"
+                            onChange={onChange}
+                            disabled={!judge}
+                            />
+                    </div>
+                    <hr/>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={inverted}>Inverse</button>
+                </div>
+            )
+        }
+
+        function Kilotomiles(){
+            const [item, setitem] = React.useState(0)
+            const [judge, setjudge] = React.useState(false)
+            const onChange = (event) => {
+                setitem(() => event.target.value);
+            }
+            const inverted = () => {
+                setjudge((judge) => !judge);
+                reset()
+            }
+            const reset = () => {
+                setitem((item) => 0)
+            }
+            return (
+                <div>
+                    <h3>Kilometer to Mile</h3>
+                    <div>
+                        <label forhtml="k_input">Kilometer</label>
+                        <input
+                            id="k_input"
+                            value={judge ? item * 1.609 : item}
+                            placeholder="Kilometer"
+                            type="number"
+                            onChange={onChange}
+                            disabled={judge}
+                            />
+                    </div>
+                    <div>
+                        <label forhtml="m_input">Mile</label>
+                        <input
+                            id="m_input"
+                            value={judge ? item : item/1.609}
+                            placeholder="Mile"
+                            type="number"
+                            onChange={onChange}
+                            disabled={!judge}
+                            />
+                    </div>
+                    <hr/>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={inverted}>Inverse</button>
+                </div>
+            )
+        }
+
+        function App(){
+            const [index, setindex] = React.useState('-1')
+            const onSelect = (event) => {
+                setindex((index) => event.target.value)
+            }
+            return (
+                <div>
+                    <h2>Super Converter</h2>
+                    <select onChange={onSelect}>
+                        <option value='-1'>Select Unit</option>
+                        <option value='0'>Minute&Hour</option>
+                        <option value='1'>Kilometer&Mile</option>
+                    </select>
+                    <hr/>
+                    {index === '0' ? (<Minutetohours/>) : index === '1' ? (<Kilotomiles/>) : null}
+                </div>
+            )
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App/>, root);
+    </script>
+</html>
